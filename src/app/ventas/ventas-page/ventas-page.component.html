@@ -1,0 +1,74 @@
+<p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+        <button pButton pRipple  icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts($event)" [disabled]="!selectedProductos || !selectedProductos.length"></button>
+    </ng-template>
+</p-toolbar>
+
+<p-table [value]="productos" [(selection)]="selectedProductos" sortField="id" dataKey="id" selectionMode="multiple" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]" [(selection)]="selectedProductos">
+    <ng-template pTemplate="caption">
+            <h1 class="p-m-2 p-text-center">Productos</h1>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th class="p-text-center">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th class="p-text-center">Codigo</th>
+            <th class="p-text-center">Nombre</th>
+            <th class="p-text-center">Cantidad</th>
+            <th class="p-text-center">Fecha de Inicio</th>
+            <th class="p-text-center"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-producto>
+        <tr>
+            <td class="p-text-center">
+                <p-tableCheckbox [value]="producto"></p-tableCheckbox>
+            </td>
+            <td class="p-text-center">{{producto.id}}</td>
+            <td class="p-text-center">{{producto.name}}</td>
+            <td class="p-text-center">{{producto.quantity}}</td>
+            <td class="p-text-center">{{producto.startDate | date : "dd/MM/yyyy" :'-360' }}</td>
+            <td class="p-text-center">
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(producto)"></button>
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning p-mr-2" (click)="confirmDelete($event,producto)"></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog header="New Product"  [(visible)]="displayBasic" class="dialog"  [contentStyle]="{'overflow': 'visible'}" >
+
+        <div class="p-m-2" [style]="{width: '300px'}">
+
+            <div class="p-field p-grid">
+                <label for="name" class="p-col-fixed" [style]="{width: '100px'}">Nombre</label>
+                <div class="p-col">
+                    <input class="styleInput" type="text" id="name" [(ngModel)]="producto.name" autocomplete="off" pInputText>
+                </div>
+            </div>
+            <div class="p-field p-grid">
+                <label for="quantity" class="p-col-fixed" [style]="{width: '100px'}">Cantidad</label>
+                <div class="p-col">
+                    <input class="styleInput" type="text" [(ngModel)]="producto.quantity" pKeyFilter="int"  pInputText>
+                </div>
+            </div>
+            <div class="p-field p-grid ">
+                <label for="date" class="p-col-fixed">Fecha</label>
+                <div class="p-col">
+                    <p-calendar class="p-grid p-jc-end p-mr-3" inputId="date" [(ngModel)]="producto.startDate"  dateFormat="dd/mm/yy"  [showIcon]="true"  [style]="{width: '185px'}" ></p-calendar>
+                </div>
+            </div>
+
+        </div>
+
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-save" (click)="createProduct(producto)" label="Save" styleClass="p-button-text"></p-button>
+    </ng-template>
+
+</p-dialog>
+
+<p-toast position="top-center"></p-toast>
+<p-confirmPopup></p-confirmPopup>
+
