@@ -8,36 +8,46 @@ import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-user-login',
   templateUrl: './user-login.component.html',
-  styleUrls: ['./user-login.component.css']
+  styleUrls: ['./user-login.component.css'],
 })
 export class UserLoginComponent implements OnInit {
-
+  //Variables a usar
   user: User = {
-    username : "",
-    password : "",
-  }
+    username: '',
+    password: '',
+  };
 
-  // inyectamos nuestro servicio
-  constructor(protected service: UserService, private router: Router, private messageService: MessageService) { }
+  // inyectamos nuestros servicio
+  constructor(
+    protected userService: UserService,
+    private router: Router,
+    private messageService: MessageService
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  loginUser(){
-    if(this.user.username ==="" || this.user.password ===""){
+  //Método para hacer login
+  loginUser() {
+    if (this.user.username === '' || this.user.password === '') {
       console.log('ERROR');
-      this.messageService.add({severity:'info', summary: 'Acceso no permitido', detail: 'Ambos campos deben estar llenos', icon: 'pi-file'});
-    }else{
-
-      // Del response sacamos el token
-      this.service.login(this.user).subscribe((response:any) =>{
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Acceso no permitido',
+        detail: 'Ambos campos deben estar llenos',
+        icon: 'pi-file',
+      });
+    } else {
+      //mandamos los datos del usuario al metodo login del UserService
+      this.userService.login(this.user).subscribe((response: any) => {
         // guardamos en el local storage nuestro token
-        console.log({response});
-        localStorage.setItem('authKey',response.authKey)
-        // cambiam
-        this.router.navigate(['ventas']);
-      })
+        localStorage.setItem('authKey', response.authKey);
+
+        //cambiamos le valor
+        this.userService.userState.next(true);
+
+        // cambiamos a la ruta home
+        this.router.navigate(['']);
+      });
     }
   }
-
 }
