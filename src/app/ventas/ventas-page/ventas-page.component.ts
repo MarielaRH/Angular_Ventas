@@ -32,7 +32,7 @@ export class VentasPageComponent implements OnInit {
   //se muestra cuando se ha carga el componente
   ngOnInit(): void {
     this.loadingData();
-    //Menú para navegar entre las diferentes rutas
+    //Menú para navegar entre las diferentes rut
     this.items = [
       { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: [''] },
       { label: 'Ventas', icon: 'pi pi-fw pi-dollar', routerLink: ['/ventas'] },
