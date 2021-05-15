@@ -15,6 +15,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import {ConfirmPopupModule} from 'primeng/confirmpopup';
 import {KeyFilterModule} from 'primeng/keyfilter';
+import {MenuModule} from 'primeng/menu';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import {KeyFilterModule} from 'primeng/keyfilter';
     CalendarModule,
     ToastModule,
     ConfirmPopupModule,
-    KeyFilterModule
+    KeyFilterModule,
+    MenuModule
   ],
   providers:[
     MessageService, ConfirmationService

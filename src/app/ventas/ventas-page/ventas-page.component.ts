@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../model/product';
 import { ProductService } from '../services/product.service';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
+import { UserService } from '../../login/services/user.service';
 
 
 @Component({
@@ -19,15 +21,27 @@ export class VentasPageComponent implements OnInit {
   producto : Product = {};
   dateStr : string = "";
   selectedProductos: Product[] = [];
+  items: MenuItem[] = [];
+  activeItem: MenuItem = {};
 
 
 
   // inyectaamos el servicop
-  constructor(protected service : ProductService,private messageService: MessageService, private confirmationService: ConfirmationService) {}
+  constructor(protected service : ProductService,private messageService: MessageService, private confirmationService: ConfirmationService, private user : UserService,private router : Router) {}
 
   //se muestra cuando se ha carga el componente
   ngOnInit(): void {
     this.loadingData();
+
+    this.items = [
+      {label: 'Home', icon: 'pi pi-fw pi-home',routerLink:['']},
+      {label: 'Ventas', icon: 'pi pi-fw pi-dollar', routerLink:['/ventas']},
+      {label: 'Catálogo', icon: 'pi pi-fw pi-book'},
+      {label: 'Entregas', icon: 'pi pi-fw pi-send'},
+      {label: 'Settings', icon: 'pi pi-fw pi-cog'}
+  ];
+    this.activeItem = this.items[1];
+
   }
 
   // Método para cargar y pintar los productos en la tabla
@@ -46,7 +60,8 @@ export class VentasPageComponent implements OnInit {
   // Método para convertir la fecha json a Date
   jsonDate(fecha: string){
     this.dateStr = JSON.parse(fecha);
-    return new Date(this.dateStr);
+    // sumamos 6 horas para manejar nuestra zona horaria
+    return new Date(new Date(this.dateStr).getTime() + 3600*1000*6);
   }
 
   // Método para verificar si un producto ya existe dentro del arreglo de productos
@@ -133,5 +148,9 @@ export class VentasPageComponent implements OnInit {
           this.messageService.add({severity:'error', detail:'Operacion cancelada'});
       }
     });
+  }
+
+  logoutUser(){
+    this.user.logout();
   }
 }

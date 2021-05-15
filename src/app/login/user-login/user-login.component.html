@@ -1,0 +1,31 @@
+<div class="custom-div-container">
+    <p-card [style]="{'width': '25rem','background': 'rgba(0,0,0,0.2)', 'padding':'10px','border-radius': '50px'}">
+        <ng-template pTemplate="header">
+            <div class="custom-div-inputs" style="padding-top: 20px;">
+                <div class="custom-div-icon">
+                    <i class="pi pi-user" style="font-size: 2rem ; color: white;"></i>
+                </div>
+            </div>
+        </ng-template>
+
+            <div class="p-fluid p-text-center">
+                <div class="p-field" style="margin-bottom: auto;">
+                    <label for="email" style="color: white;font-weight: bold;">@</label>
+                    <input class="custom-input" id="email" [(ngModel)]="user.username" type="text" placeholder="Email" pInputText (keyup.enter)='loginUser()'>
+                </div>
+                <div class="p-field" style="margin-bottom: auto;">
+                    <label for="password">
+                        <i class="pi pi-lock" style="color: white;"></i>
+                    </label>
+                        <input class="custom-input" id="password" [(ngModel)]="user.password" type="password" placeholder="Password"  pInputText (keyup.enter)='loginUser()'>
+                </div>
+            </div>
+
+        <ng-template pTemplate="footer">
+            <div class="custom-div-inputs">
+                <button  type="button" class="custom-button" aria-required="true" (click)="loginUser()" >Login</button>
+            </div>
+        </ng-template>
+    </p-card>
+</div>
+<p-toast></p-toast>

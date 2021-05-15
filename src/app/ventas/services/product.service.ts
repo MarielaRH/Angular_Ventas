@@ -14,8 +14,6 @@ export class ProductService {
   httpHeader = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Auth-key': 'eyJzZXNzaW9uSWQiOjc1OSwidXNlcm5hbWUiOiJsc29zYUBnbWFpbC5jb20iLCJzdGF0dXMiOiJTIiwiY2xpZW50SWQiOjEsImFsZyI6IkhTNTEyIn0.eyJzdWIiOiIxIiwiZXhwIjoxNjIwNzY3OTYxfQ.SoBiUBWb_XQE46STo2efFVDtE55Yf-8zWAa55kIZYqI2T6l9_XszivoafCrKhpNfdTfn7T_gAnl2F-Pd2U71ZQ'
-
     })
   }
   // Inyectamos el;modulo http
